@@ -1,0 +1,275 @@
+---
+title: "parallel primer"
+format: 
+  html:
+    toc: true
+    code-fold: true
+    code-summary: "Show the code"
+    embed-resources: true
+---
+
+## Simple parallelizing
+
+Here's an example of a piece of code that estimates \(pi\) up to a certain number of iterations from the series approximation. The while loop is used to save from creating a very large sequence vector.
+
+
+```{r,cache=T}
+piestimate <- function(n){
+  estimate=0
+  i=0
+  while (i<n){
+    estimate=estimate+4*(-1)^i/(2*i+1)
+    i=i+1
+  }
+  return(estimate)
+}
+
+
+iterations = seq(100,200,length.out=33)
+estimates = sapply(iterations,piestimate)
+plot(iterations,estimates)
+abline(h=pi)
+
+```
+
+This was reasonably fast on my computer. Through a bit of trial and error, I found that it takes almost 2 seconds  to iterate 10 million times
+
+```{r}
+system.time((piestimate(1e7)))
+```
+
+Now, suppose I wanted to run this for the next 10 iterations after 10 million, that'll take just under 20 seconds.
+
+Open up your resource monitor/task manager/activity monitor and you'll see one processor is at 100%, doing all the work, so they're all executed one after each other.
+
+
+```{r,cache=T}
+iterations = 1e7+(1:10)
+system.time(lapply(iterations,piestimate))
+```
+
+
+To have this done in parallel, consider running this explicitly on more cores. Again, look at how many CPUs at 100%. If you have more than 10 cores, only 10 will max out because we only have 10 jobs.
+
+```{r,cache=T}
+iterations = 1e7+(1:10)
+
+
+library(parallel)
+cl=makeCluster(10)
+system.time(parLapply(cl,iterations,piestimate))
+stopCluster(cl)
+```
+
+
+You can see that we had a big speedup.
+
+
+## Multiple parameters
+
+Suppose that we a function that should take multiple parameters. We can achieve this one of two ways. First is to directly pass the parameters in the function. By default, *apply functions take a single parameter (which can be a list/vector) so that's often the easist approach.
+
+Consider this simulation that finds the distribution of pvalues when the null hypothesis is violated.
+
+```{r,cache=T}
+
+ttestSim <- function(simulationparameters){
+  numReps=100
+  #simulationparameters is a list
+  #slots are named sampleSize, trueMean, direction
+  oneSimulation<-function(){
+    randomData <- with(simulationparameters,
+                       rnorm(n=sampleSize,mean=trueMean)
+    )
+    ttestobj = with(simulationparameters,t.test(randomData,alternative=direction))
+    with(ttestobj,p.value)
+  }
+  replicate(n=numReps,oneSimulation())
+}
+ttestSim(list(sampleSize=10,trueMean=0.5,direction="two.sided"))
+
+```
+
+We can create a table that contains all simulation scenarios that we might be interested in and then turn each row of that into a list
+
+```{r}
+
+simScenarios=expand.grid(
+  sampleSize=c(5,10,25,50),
+  trueMean=c(0,.25,.5,.75,1),
+  direction=c("two.sided","greater","less"),stringsAsFactors = F
+)
+
+#turn each row into its own list
+scenariosList=split(simScenarios,seq(nrow(simScenarios)))
+
+```
+
+We can quickly test that this works by running through the first three rows
+
+```{r,cache=T}
+#| cache: true
+#| output: collapse
+simScenarios.small = scenariosList[1:3]
+simScenarios.small
+lapply(simScenarios.small,ttestSim)
+```
+Each of the above blocks is the result from one of the scenarios
+
+
+```{r,cache=T}
+library(parallel)
+
+numCores=detectCores()
+cl=makeCluster(numCores)
+simResults = parLapply(cl,scenariosList,ttestSim)
+stopCluster(cl)
+```
+
+Now, we have a list `simResults` where each element of the list is 100 pvalues from the corresponding simulation scenarios from `simScenarios.List`. 
+
+
+```{r}
+scenariosList[[7]]
+theTitle=with(scenariosList[[7]],c("n=",sampleSize,", truemean=",trueMean,", direction=",direction))|>paste(collapse="",sep="")
+hist(simResults[[7]],main=theTitle)
+
+```
+
+
+
+# load balancing and job order
+
+When running in parallel and approximate job lengths are known, it's you usually won't have any cases faster than  when you
+- ordering jobs longest to shortest
+- applying load balancing
+
+
+
+```{r job,cache=T,warning=F}
+
+
+job = function(i){
+  starttime = Sys.time()
+  Sys.sleep(i/2)
+  endtime = Sys.time()
+  list(pid=Sys.getpid(),start=starttime,end=endtime)
+}
+
+library(parallel)
+```
+
+
+```{r parl,cache=T,warning=F}
+
+cl=makeCluster(2)
+parl.answers_1_10 = parLapply(cl=cl,1:10,job)
+parl.answers_10_1 = parLapply(cl=cl,10:1,job)
+parl.answers_1_10LB = parLapplyLB(cl=cl,1:10,job)
+parl.answers_10_1LB = parLapplyLB(cl=cl,10:1,job)
+stopCluster(cl)
+```
+
+
+
+
+```{r mc,cache=T,warning=F}
+if (Sys.info()[["sysname"]]!="Windows"){
+  #processor ID changes more often due to forking but total runtimes are comparable
+  mc.answers_1_10  =  mclapply(1:10,job,mc.preschedule = T,mc.cores=2)
+  mc.answers_10_1  =  mclapply(10:1,job,mc.preschedule = T,mc.cores=2)
+  mc.answers_1_10LB = mclapply(1:10,job,mc.preschedule = F,mc.cores=2)
+  mc.answers_10_1LB = mclapply(10:1,job,mc.preschedule = F,mc.cores=2)
+}
+
+```
+
+
+```{r,cache=T,warning=F,eval=T,fig.width=10}
+
+makeggplot = function(answers,maintitle=""){
+  
+  require(ggplot2)
+  allpid   = sapply(answers,\(singleResult)singleResult$pid)
+  allstart = sapply(answers,\(singleResult)singleResult$start)
+  allend   = sapply(answers,\(singleResult)singleResult$end)
+  
+  
+  
+  # --- 1. Create a data frame (from your existing vectors) ---
+  latesttime = max(allend)
+  earliesttime = min(allstart)
+  
+  job_results_df = data.frame(
+    job_id = factor(1:length(answers)),
+    pid    = factor(allpid),           # This will be the y-axis aesthetic
+    start  = allstart-earliesttime,
+    end    = allend-earliesttime
+  )
+  
+  
+  
+  runtime = round(latesttime-earliesttime,1)
+  
+  # --- 2. Plot the Gantt Chart with single color and vertical markers ---
+  ggplot(job_results_df, 
+         aes(x = start, 
+             xend = end, 
+             y = pid, 
+             yend = pid)) +
+    
+    geom_segment(linewidth = 4, color = "#1f78b4") + 
+    
+    
+    geom_segment(aes(x = end, xend = end, 
+                     y = as.numeric(pid) - 0.2, yend = as.numeric(pid) + 0.2), 
+                 linewidth = 1.5, color = "#e31a1c") +   # Red for End
+    
+    # Add labels and title
+    labs(
+      title = paste(maintitle, runtime, "seconds"),
+      x = "Time",
+      y = "Process ID (PID)"
+    ) +
+    # Use a clean theme
+    # Remove redundant grid lines
+    theme(
+      panel.grid.major.y = element_blank()
+    )
+}
+
+p1.parl <- makeggplot(parl.answers_1_10,"normal shortest to longest")
+p2.parl <- makeggplot(parl.answers_10_1,"normal longest to shortest")
+p3.parl <- makeggplot(parl.answers_1_10LB,"balanced shortest to longest") 
+p4.parl <- makeggplot(parl.answers_10_1LB ,"balanced shortest to longest")
+
+require(patchwork)
+
+(p1.parl + p2.parl) / (p3.parl + p4.parl)
+
+
+if(Sys.info()[["sysname"]]!="Windows"){
+  
+  p1.mc <- makeggplot(mc.answers_1_10,"normal shortest to longest")
+  p2.mc <- makeggplot(mc.answers_10_1,"normal longest to shortest")
+  p3.mc <- makeggplot(mc.answers_1_10LB,"balanced shortest to longest") 
+  p4.mc <- makeggplot(mc.answers_10_1LB ,"balanced shortest to longest")
+  
+  require(patchwork)
+  
+  (p1.mc + p2.mc) / (p3.mc + p4.mc)
+  
+  
+}
+
+
+```
+
+
+
+Below is an example from parlapply on my server:
+[parlapplysample](parlapply.png)
+Below is an example from mclapply  on my server:
+[mclapplysample](mclapply.png)
+
+These were both run on the same machine. I don't know by the mclapply ones are much more consistent and it generally doesn't matter. (closer to 14/15 seconds whereas the parlapply ones vary the way I expect them to). When 

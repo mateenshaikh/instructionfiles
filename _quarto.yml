@@ -1,0 +1,27 @@
+project:
+  type: website
+
+website:
+  title: "instructionfiles"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - about.qmd
+      - href: expenses/expenses.qmd
+        text: expenses
+      - href: windows_ubuntu/wsl.qmd
+        text: WSL
+      - href: parallel/pi.qmd
+        text: parallel
+
+format:
+  html:
+    theme:
+      light: yeti
+      dark: superhero
+    css: styles.css
+    toc: true
+
+
+

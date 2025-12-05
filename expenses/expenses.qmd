@@ -1,0 +1,190 @@
+---
+format:
+  html: 
+    number-sections: true
+    toc: true
+    embed-resources: true
+---
+
+::: {.callout .callout-note collapse="true"}
+## Direct links (click to see) {.unnumbered}
+These are links on onetru/sharepoint, so you need to log in
+
+ - [All forms](https://onetru.sharepoint.com/sites/FinancialServices/SitePages/APForms.aspx)
+
+ - [Cheque Req](https://onetru.sharepoint.com/:b:/s/FinancialServices/ESX2k5wDAi9PjBZFPI7fVEYBFCDrnslah0UUlJDK2-pQ0w?e=tl7T1X)
+ - [Canadian Travel](https://onetru.sharepoint.com/sites/FinancialServices/FinancePublic/Forms/AllItems.aspx?id=/sites/FinancialServices/FinancePublic/AP.Form.TravelExpenseCanada.250620.pdf&parent=/sites/FinancialServices/FinancePublic)
+ - [International Travel](https://onetru.sharepoint.com/:b:/s/FinancialServices/ETGVr1B8Q5ZEmPq0uT-3srgBNXRxDu4dJ-5Xrl-PUsi7zw?e=wVjuhR)
+:::
+
+# General approach
+
+You provide receipts, and identify which account the money comes from.
+To facilitate this, there's a few forms with prefilled items specific to
+the type of form. In theory, as long as the right info is there, you can
+any of a couple forms, it just might be more work on your part.
+
+## What you need
+
+You should have
+
+-   pdf **copies of your receipts**, either grab the electronic receipt
+or scan it manually.
+-   account info of where money is used (fund,org,account). each is a
+6-digit number:
+   <style>
+table.custom-borders {
+  border-collapse: collapse;
+  width: 100%;
+}
+table.custom-borders th, table.custom-borders td {
+  border: 1px solid #333;
+  padding: 8px;
+}
+table.custom-borders th,
+table.custom-borders td:first-child,
+table.custom-borders td:nth-child(2) {
+  vertical-align: top;
+}
+</style>
+<table class="custom-borders">
+<tr>
+<td><b>fund</b></td>
+<td>[FROM]</td>
+<td>
+the department originating the use of funds.
+The first 4 digits identify your department, the last two digits identify the use in your department.
+For faculty, the last two digits are usually 10 (I think).
+For most individual pd funds and individual research grants, this will always be the same for the faculty member.
+</td>
+</tr>
+<tr>
+<td><b>org/orgn</b><br>(origin)</td>
+<td>[WHO]</td>
+<td>
+the department originating the use of funds.
+The first 4 digits identify your department, the last two digits identify the use in your department.
+For faculty, the last two digits are usually 10 (I think).
+For most individual pd funds and individual research grants, this will always be the same for the faculty member
+</td>
+</tr>
+<tr>
+<td><b>acct:</b></td>
+<td>[WHY]</td>
+<td>
+the way the money was used. It’s a 6 digit code kind of like the library dewey decimal system.
+The first couple digits identify the general use (e.g., 75xxxx is travel, 751xxx is travel within the province, etc).
+The last few digits identify what type of activity it was, like hotel, airfare, etc.
+For things like buying a new ergonomic keyboard you’d put in account 703004.
+I found that because in FAST&gt;Finance Reporting, when you click Acct: I scrolled down and saw these made the most sense:
+<ul>
+<li>70: Supplies and Fees</li>
+<li>703: Other supplies</li>
+<li>7030: Other supplies</li>
+<li>703004: Computer, Software &amp; Audio supplies</li>
+</ul>
+</td>
+</tr>
+</table>
+
+### Form locations
+
+Forms are found on OneTRU on the [Finance Home
+Page](https://onetru.sharepoint.com/sites/FinancialServices/SitePages/Finance.aspx).
+
+```         
+→ OneTRU
+
+  → Top menu bar: TRU Hubs
+
+    → Operations Header: Financial Services
+
+      → On the right: Payable forms
+```
+
+# Tips for all forms
+
+Never sign it before emailing it (or always keep an unsigned copy).
+Signing locks the form. When you send it to the admin assistant, they
+might catch a mistake and then you have to do it all over a gain. Send
+them an unsigned copy asking if they see anything amiss. Even if they
+give you the ok, keep a copy of the unsigned form in case someone else
+catches something.
+
+## Travel forms
+
+Dedicated fills itemize your expenses for you and
+fills in a lot of the acct codes for you and sorts so you don't have to
+look them up and automatically knows how to deal with how taxes are
+handled. Use these to save time if you're using the items on the form
+like: 
+
+- Per diem 
+- Accomodations 
+- Travel (any kind including airfare,
+taxi, driving your own car, bus, etc.) 
+- Other travel stuff. Read the form 
+- empty textboxes if you have other related things
+
+There are different forms for
+
+- [Within Canada](https://onetru.sharepoint.com/sites/FinancialServices/FinancePublic/Forms/AllItems.aspx?id=/sites/FinancialServices/FinancePublic/AP.Form.TravelExpenseCanada.250620.pdf&parent=/sites/FinancialServices/FinancePublic) ( specify if it's all within province or some outside of province)
+- [International](https://onetru.sharepoint.com/:b:/s/FinancialServices/ETGVr1B8Q5ZEmPq0uT-3srgBNXRxDu4dJ-5Xrl-PUsi7zw?e=wVjuhR)
+
+Note that Athletics and Adventure Tourism have different forms with additional prefilled fields.
+
+If you have travel and other things being reimbursed simultaneously,
+it's easier to use this form. The empty text boxes save you from having
+to make a separate cheque requisition. It doesn't matter if they're
+unrelated to your reason for travel. In theory, you can use this form if
+you don't have travel, as well, by only using the empty textboxes.
+
+## Cheque Req
+
+The [Cheque Req](https://onetru.sharepoint.com/:b:/s/FinancialServices/ESX2k5wDAi9PjBZFPI7fVEYBFCDrnslah0UUlJDK2-pQ0w?e=tl7T1X) is the "generic" way of filling in forms. It's a lot
+simpler but nothing is prefilled. You can actually do most forms with
+this, but it just makes it more work because you spend more time looking
+appropriate codes and you have to enter the taxes.
+
+In Cheque Req, you'll see the ccodes for Fund, Origin (org/org),
+Account. Fill those in. We don't use Program, Activity, or Location.
+Leave activity and location blank, but put in 99999 for Program. If you
+have different Fund, or different Accounts (for different money uses)
+then use different lines. If you need more than the 3 provided you can
+attach a second form. If you only need one combination of fund/org/acct
+you can split it up, but it's cleaner to put it in one line and split it
+up on another document.
+
+If your receipts identify GST and PST costs, separate them out and list
+the subtototal, taxes, and total. If you only have the total, just put
+in the final total.
+
+### Receipts:
+
+If you just have one receipt and one reimbursement, you can just append
+it as a second page of the pdf. Clearly **highlight** the total you used
+that appears on the form to make it easier for finance.
+
+If you have multiple receipts, you really should make a tiny janky
+spreadsheet to keep track of everything and make sure you've accounted
+for it all. In the spreadsheet put what's being claimed, the amount, and
+which receipt it is. For the last, I put the corresponding page number
+on the pdf so it's easy to cross reference. Keep a total at the bottom
+and let the spreadsheet math do the work. I actually attach the
+spreadsheet right after the form (which adds another page to the big
+pdf) but then the finance folks know what info I was using. While I'm
+working I usually put a blank page in the big pdf file until the
+spreadsheet is complete. That way, the page counts stay accurate.
+
+![](images/clipboard-2165087122.png)
+
+
+# Sending Documents
+
+Put everything into a single  pdf. Make sure all the page numbers match, if appropriate. Ensure that if you are required to submit other information, it's clear where you can find it in the pdf. 
+
+If you want, you can send it to an admin assistant to double check before signing. If you're experienced enough or are sure it's ok, just go ahead and sign it. 
+
+- For totals under $1000, send to your chair for signature. They'll send it back to you and you send to the admin assistant, who forwards to finance.
+- For totals over $1000, send to the admin assistant to put in a folder for dean's signature. They will directly forward to finance and CC you.
+
