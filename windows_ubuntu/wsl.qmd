@@ -108,7 +108,7 @@ wget https://download2.rstudio.org/server/jammy/amd64/rstudio-server-2025.09.2-4
 ```
 Because the last version in September 2025 at the time this document was written. Copy the version on the webapge after you've selected your Ubuntu version. The command afterward (wget downloads that file into your current folder.
 
-Then, install the version you just downloaded. The file name changes depending on the version. You can just type `wget gdebi rstudio` and press <tab>, it'll auto-complete the filename for you and you can press enter. In my case it's
+Then, install the version you just downloaded. The file name changes depending on the version. You can just type `wget gdebi rstudio` and press `<tab>`, it'll auto-complete the filename for you and you can press enter. In my case it's
 
 ```.bash
 sudo gdebi rstudio-server-2025.09.2-418-amd64.deb
@@ -131,6 +131,9 @@ open any browser and go to the url
 your username/password is your Ubuntu username/password.
 
 Now you're running rstudio from within linux, which lets you use things like `mclappy` when parallel computing.
+
+## using vscode/positron
+Right now, the active connection through vscode is still ab it 
 
 
 # Optionals

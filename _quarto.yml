@@ -12,6 +12,8 @@ website:
         text: expenses
       - href: windows_ubuntu/wsl.qmd
         text: WSL
+      - href: plssh/passwordlessssh.qmd
+        text: passwordless ssh
       - href: parallel/pi.qmd
         text: parallel
 
