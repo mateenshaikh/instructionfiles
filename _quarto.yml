@@ -26,7 +26,7 @@ format:
   html:
     theme:
       light: yeti
-      dark: superhero
+      dark: solar
     css: styles.css
     toc: true
 
