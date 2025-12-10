@@ -8,16 +8,20 @@ website:
     left:
       - href: index.qmd
         text: Home
-      - about.qmd
-      - href: expenses/expenses.qmd
-        text: expenses
-      - href: windows_ubuntu/wsl.qmd
-        text: WSL
-      - href: plssh/passwordlessssh.qmd
-        text: passwordlessssh
-      - href: parallel/pi.qmd
-        text: parallel
-
+      - href: about.qmd # FIX 1: Missing 'href' and 'text' keys
+        text: About # FIX 1: Added text key for the 'about' page
+      - text: for faculty
+        menu: 
+          - href: expenses/expenses.qmd
+            text: expenses
+      - text: computing # FIX 2: Missing colon (:) after 'menu'
+        menu: # FIX 2: Added the required colon
+          - href: windows_ubuntu/wsl.qmd
+            text: WSL
+          - href: plssh/passwordlessssh.qmd
+            text: passwordlessssh
+          - href: parallel/pi.qmd
+            text: parallel
 format:
   html:
     theme:
