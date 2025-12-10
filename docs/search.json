@@ -53,7 +53,7 @@
     "href": "plssh/passwordlessssh.html#create-new-keys",
     "title": "Passwordless ssh",
     "section": "1.1 Create new keys",
-    "text": "1.1 Create new keys\nssh-keygen -t rsa -b 4096\nWhen prompted for the location to make the keys, accept the default location and press enter. You can enter a passphrase if you wish."
+    "text": "1.1 Create new keys\nssh-keygen -t ed25519\nThere are different types/ways of keys to make. This is good enough.\n\n\n\n\n\n\nUseless Dorky Note\n\n\n\n\n\nYou can look up other ways if you’re very interested. The -t ed25519 is fairly popular as of this article in 2025 because it works faster (but we’re talking about a millisecond, though) than the old RSA standard (below) but gives about the same security.\nssh-keygen -t rsa -b 3072\nThe -t rsa makes the type follow the RSA scheme. -b 3072 is the length of the key in binary/bits. 3072 bits is like a regular password over 500 characters long. It has comparable to the security what the ed25519 provides, but is more efficient (again, it’s only around a millisecond). However, RSA can be made more secure by using a larger number, typically \\(2^{12}=4096\\) if desired.\n\n\n\nWhen prompted for the location to make the keys, accept the default location and press enter. You can enter a passphrase if you wish."
   },
   {
     "objectID": "index.html",
