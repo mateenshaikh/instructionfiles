@@ -1,5 +1,6 @@
 project:
   type: website
+  output-dir: docs
 
 website:
   title: "instructionfiles"
@@ -13,7 +14,7 @@ website:
       - href: windows_ubuntu/wsl.qmd
         text: WSL
       - href: plssh/passwordlessssh.qmd
-        text: passwordless ssh
+        text: passwordlessssh
       - href: parallel/pi.qmd
         text: parallel
 
