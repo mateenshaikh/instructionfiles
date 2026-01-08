@@ -87,6 +87,10 @@ I found that because in FAST&gt;Finance Reporting, when you click Acct: I scroll
 </tr>
 </table>
 
+Instructions for finding all of the FOAPAL codes is on the 
+Forms are found on OneTRU on the [Finance Home
+Page](https://onetru.sharepoint.com/sites/FinancialServices/SitePages/Finance.aspx) [Banner Chart of Accounts](https://onetru.sharepoint.com/sites/FinancialServices/SitePages/BannerChartOfAccounts.aspx). Note that for step 3, you want to select "Acct"
+
 ### Form locations
 
 Forms are found on OneTRU on the [Finance Home
@@ -187,4 +191,5 @@ If you want, you can send it to an admin assistant to double check before signin
 
 - For totals under $1000, send to your chair for signature. They'll send it back to you and you send to the admin assistant, who forwards to finance.
 - For totals over $1000, send to the admin assistant to put in a folder for dean's signature. They will directly forward to finance and CC you.
+
 
